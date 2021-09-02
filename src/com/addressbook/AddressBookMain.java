@@ -14,7 +14,7 @@ public class AddressBookMain {
 		
 		
 		while(true) {
-			System.out.println("Enter your choice\n1.Add Contacts\n2.Display Contact\n3.Exit\n");
+			System.out.println("\nEnter your choice\n1.Add Contacts\n2.Display Contact\n3.Exit\n");
 			int choice = scanner.nextInt();
 				switch(choice) {
 				case 1:
@@ -55,8 +55,13 @@ public class AddressBookMain {
 	}
 	
 	private static void displayContacts() {
-		for(Contact c: address.getAddress()) {
-			System.out.println(c);
+		Set<Contact> contactDetails = address.getAddress();
+		if(contactDetails.size() == 0) {
+			System.out.println("Address book is empty");
+		}else {
+			for(Contact c: contactDetails) {
+				System.out.println(c);
+			}
 		}
 	}
 
