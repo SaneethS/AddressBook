@@ -12,7 +12,7 @@ public class AddressBookMain {
 		
 		while(true) {
 			System.out.println("\nEnter your choice\n1.Add Contacts\n2.Display Contact\n3.Edit Contacts\n"
-					+ "Any other choice: Exit\n");
+					+ "4.Delete Contacts\nAny other choice: Exit\n");
 			int choice = scanner.nextInt();
 				switch(choice) {
 				case 1:
@@ -24,6 +24,9 @@ public class AddressBookMain {
 				case 3:
 					editContacts();
 					break;
+				case 4:
+					deleteContacts();
+					break;
 				default:
 					return;
 			}
@@ -31,6 +34,34 @@ public class AddressBookMain {
 	}
 
 	
+
+	private static void deleteContacts() {
+		Set<Contact> contactDetails = AddressBook.getInstance().getAddress();
+		boolean flag = false;
+		Contact delete = null;
+		
+		System.out.println("Enter the first name to edit");
+		scanner.nextLine();
+		String firstName = scanner.nextLine();
+		System.out.println("Enter the last name to edit");
+		String lastName = scanner.nextLine();
+		
+		for(Contact c: contactDetails) {
+			if(c.getFirstName().equals(firstName) && c.getLastName().equals(lastName)) {
+				delete = c;
+				flag = true;
+			}
+		}
+		
+		if(flag == false) {
+			System.out.println("No contacts found");
+		}else {
+			contactDetails.remove(delete);
+			System.out.println("Deleted the contact!!!");
+		}
+	}
+
+
 
 	private static void editContacts() {
 		Set<Contact> contactDetails = AddressBook.getInstance().getAddress();
