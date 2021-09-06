@@ -3,6 +3,10 @@ package com.addressbook;
 import java.math.BigInteger;
 import java.util.Objects;
 
+/**@class in which all the contact details are stored using getter and setter
+ * @author saneeths
+ *
+ */
 public class Contact {
 	private String firstName;
 	private String lastName;

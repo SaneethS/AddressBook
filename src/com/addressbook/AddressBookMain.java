@@ -3,6 +3,10 @@ package com.addressbook;
 import java.math.BigInteger;
 import java.util.*;
 
+/**@class which is created to call all the funtions from Contact and AddressBook
+ * @author saneeths
+ *
+ */
 public class AddressBookMain {
 	private static Scanner scanner = new Scanner(System.in);
 
@@ -35,6 +39,9 @@ public class AddressBookMain {
 
 	
 
+	/**
+	 * method which is created to delete the contacts
+	 */
 	private static void deleteContacts() {
 		Set<Contact> contactDetails = AddressBook.getInstance().getAddress();
 		boolean flag = false;
@@ -63,6 +70,9 @@ public class AddressBookMain {
 
 
 
+	/**
+	 * method which is created to edit contacts
+	 */
 	private static void editContacts() {
 		Set<Contact> contactDetails = AddressBook.getInstance().getAddress();
 		boolean flag = false;
@@ -139,6 +149,9 @@ public class AddressBookMain {
 
 
 
+	/**
+	 * method which is created to add contacts
+	 */
 	private static void addContacts() {
 		
 		Contact contact = new Contact();
@@ -164,6 +177,9 @@ public class AddressBookMain {
 		AddressBook.getInstance().addContactDetails(contact);
 	}
 	
+	/**
+	 * method which is created to dispaly the contacts
+	 */
 	private static void displayContacts() {
 		Set<Contact> contactDetails = AddressBook.getInstance().getAddress();
 		if(contactDetails.size() == 0) {
