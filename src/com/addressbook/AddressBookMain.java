@@ -3,6 +3,7 @@ package com.addressbook;
 import java.math.BigInteger;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**@class which is created to call all the funtions from Contact and AddressBook
@@ -23,7 +24,8 @@ public class AddressBookMain {
 		
 		while(true) {
 			System.out.println("\nEnter your choice\n1.Add Contacts\n2.Display Contact\n3.Edit Contacts\n"
-					+ "4.Delete Contacts\n5.Choose Address Book\nAny other choice: Exit\n");
+					+ "4.Delete Contacts\n5.Choose Address Book\n6.Search"
+					+ " by City or State\nAny other choice: Exit\n");
 			int choice = scanner.nextInt();
 				switch(choice) {
 				case 1:
@@ -41,6 +43,9 @@ public class AddressBookMain {
 				case 5:
 					chooseBook();
 					break;
+				case 6:
+					search();
+					break;
 				default:
 					return;
 			}
@@ -48,6 +53,47 @@ public class AddressBookMain {
 	}
 
 	
+
+	/**
+	 * method to search a person in certain city or state
+	 */
+	private static void search() {
+		System.out.println();
+		System.out.println("Search Person by\n1.City\n2.State");
+		int choice = scanner.nextInt();
+		scanner.nextLine();
+		
+		switch(choice) {
+			case 1:
+				System.out.println("Enter City Name");
+				String city = scanner.nextLine();
+				for(AddressBook addressBook: map.values()) {
+					List<Contact> cityContacts = addressBook.getAddress().stream().filter((contact)->{
+						return contact.getCity().equals(city);
+					}).collect(Collectors.toList());
+					for(Contact contact: cityContacts) {
+						System.out.print(contact.getFirstName()+" "+contact.getLastName());
+					}
+					System.out.println();
+				}
+				break;
+			case 2:
+				System.out.println("Enter State Name");
+				String state = scanner.nextLine();
+				for(AddressBook addressBook: map.values()) {
+					List<Contact> stateContacts = addressBook.getAddress().stream().filter((contact)->{
+						return contact.getState().equals(state);
+					}).collect(Collectors.toList());
+					for(Contact contact: stateContacts) {
+						System.out.print(contact.getFirstName()+" "+contact.getLastName());
+					}
+					System.out.println();
+				}
+				break;
+		}
+	}
+
+
 
 	/**
 	 * @method has been created choose the books
