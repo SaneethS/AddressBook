@@ -360,12 +360,13 @@ public class AddressBookMain {
 	 */
 	private static void displayContacts() {
 		Set<Contact> contactDetails = addressBook.getAddress();
+		Collections.sort((List<Contact>) contactDetails);
 		if(contactDetails.size() == 0) {
 			System.out.println("Address book is empty");
 		}else {
-			for(Contact c: contactDetails) {
-				System.out.println(c);
-			}
+			contactDetails.stream().forEach((contact)->{
+				System.out.println(contact);
+			});
 		}
 	}
 }

@@ -7,7 +7,7 @@ import java.util.Objects;
  * @author saneeths
  *
  */
-public class Contact {
+public class Contact implements Comparable<Contact> {
 	private String firstName;
 	private String lastName;
 	private String address;
@@ -107,6 +107,11 @@ public class Contact {
 	
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	@Override
+	public int compareTo(Contact o) {
+		return (this.firstName+this.lastName).compareTo(o.getFirstName()+o.getLastName());
 	}
 	
 	
