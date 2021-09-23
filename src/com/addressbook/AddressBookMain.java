@@ -14,7 +14,8 @@ public class AddressBookMain {
 	private static Scanner scanner = new Scanner(System.in);
 	private static Map<String,AddressBook> map = new HashMap<String,AddressBook>();
 	private static AddressBook addressBook = null;
-	
+	private static Map<String, List<Contact>> stateMap = new HashMap<String, List<Contact>>();
+    private static Map<String, List<Contact>> cityMap = new HashMap<String, List<Contact>>();
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to Address Book program");
@@ -25,7 +26,7 @@ public class AddressBookMain {
 		while(true) {
 			System.out.println("\nEnter your choice\n1.Add Contacts\n2.Display Contact\n3.Edit Contacts\n"
 					+ "4.Delete Contacts\n5.Choose Address Book\n6.Search"
-					+ " by City or State\nAny other choice: Exit\n");
+					+ " by City or State\n7.View Person by State or City\nAny other choice: Exit\n");
 			int choice = scanner.nextInt();
 				switch(choice) {
 				case 1:
@@ -46,6 +47,9 @@ public class AddressBookMain {
 				case 6:
 					search();
 					break;
+				case 7:
+					view();
+					break;
 				default:
 					return;
 			}
@@ -53,6 +57,72 @@ public class AddressBookMain {
 	}
 
 	
+
+	/**
+	 * method to view person by city or state
+	 */
+	private static void view() {
+		System.out.println();
+		System.out.println("View Persons by\n1.City\n2.State");
+		int choice = scanner.nextInt();
+		scanner.nextLine();
+		switch(choice) {
+			case 1:
+				cityMap.clear();
+				addressBook.getAddress().stream().forEach((contact)->{
+					List<Contact> contactList1 = cityMap.get(contact.getCity());
+		            if (contactList1 == null) {
+		                List<Contact> contactList2 = new ArrayList<>();
+		                contactList2.add(contact);
+		                cityMap.put(contact.getCity(), contactList2);
+		            }
+		            else {
+		                contactList1.add(contact);
+		                cityMap.put(contact.getCity(), contactList1);
+		            }
+				});
+				
+				for(Map.Entry<String, List<Contact>> e: cityMap.entrySet()) {
+					System.out.println("City : "+e.getKey());
+					for(Contact contact: e.getValue()) {
+						System.out.print(contact.getFirstName()+" "+contact.getLastName());
+						System.out.println();
+					}
+					System.out.println();
+				}
+				break;
+				
+			case 2:
+				stateMap.clear();
+				addressBook.getAddress().stream().forEach((contact)->{
+					List<Contact> contactList1 = stateMap.get(contact.getState());
+		            if (contactList1 == null) {
+		                List<Contact> contactList2 = new ArrayList<>();
+		                contactList2.add(contact);
+		                stateMap.put(contact.getState(), contactList2);
+		            }
+		            else {
+		                contactList1.add(contact);
+		                stateMap.put(contact.getState(), contactList1);
+		            }
+				});
+				
+				for(Map.Entry<String, List<Contact>> e: stateMap.entrySet()) {
+					System.out.println("State : "+e.getKey());
+					for(Contact contact: e.getValue()) {
+						System.out.print(contact.getFirstName()+" "+contact.getLastName());
+						System.out.println();
+					}
+					System.out.println();
+				}
+				break;
+			
+			default:
+				return;
+		}
+	}
+
+
 
 	/**
 	 * method to search a person in certain city or state
