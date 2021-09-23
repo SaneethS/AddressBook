@@ -89,6 +89,8 @@ public class AddressBookMain {
 						System.out.println();
 					}
 					System.out.println();
+					System.out.print("No. of Persons in City:"+e.getValue().size()+"\n");
+					System.out.println("---------------------------------------------------------");
 				}
 				break;
 				
@@ -114,6 +116,9 @@ public class AddressBookMain {
 						System.out.println();
 					}
 					System.out.println();
+					System.out.print("No. of Persons in State: "+e.getValue().size()+"\n");
+					System.out.println("---------------------------------------------------------");
+					
 				}
 				break;
 			
@@ -137,27 +142,39 @@ public class AddressBookMain {
 			case 1:
 				System.out.println("Enter City Name");
 				String city = scanner.nextLine();
+				int cityCount = 0;
 				for(AddressBook addressBook: map.values()) {
 					List<Contact> cityContacts = addressBook.getAddress().stream().filter((contact)->{
 						return contact.getCity().equals(city);
 					}).collect(Collectors.toList());
+					
+					cityCount+=cityContacts.size();
+					
 					for(Contact contact: cityContacts) {
 						System.out.print(contact.getFirstName()+" "+contact.getLastName());
 					}
 					System.out.println();
+					System.out.print("No. of Persons in City:"+cityCount+"\n");
+					System.out.println("---------------------------------------------------------");
 				}
 				break;
 			case 2:
 				System.out.println("Enter State Name");
 				String state = scanner.nextLine();
+				int stateCount=0;
 				for(AddressBook addressBook: map.values()) {
 					List<Contact> stateContacts = addressBook.getAddress().stream().filter((contact)->{
 						return contact.getState().equals(state);
 					}).collect(Collectors.toList());
+					
+					stateCount+=stateContacts.size();
+					
 					for(Contact contact: stateContacts) {
 						System.out.print(contact.getFirstName()+" "+contact.getLastName());
 					}
 					System.out.println();
+					System.out.print("No. of Persons in State:"+stateCount+"\n");
+					System.out.println("---------------------------------------------------------");
 				}
 				break;
 		}
