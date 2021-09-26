@@ -1,7 +1,9 @@
 package com.addressbook;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.math.BigInteger;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -16,6 +18,7 @@ public class AddressBookMain {
 	private static AddressBook addressBook = null;
 	private static Map<String, List<Contact>> stateMap = new HashMap<String, List<Contact>>();
     private static Map<String, List<Contact>> cityMap = new HashMap<String, List<Contact>>();
+    private static String filePath = "data/result.txt";
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to Address Book program");
@@ -26,7 +29,8 @@ public class AddressBookMain {
 		while(true) {
 			System.out.println("\nEnter your choice\n1.Add Contacts\n2.Display Contact\n3.Edit Contacts\n"
 					+ "4.Delete Contacts\n5.Choose Address Book\n6.Search"
-					+ " by City or State\n7.View Person by State or City\nAny other choice: Exit\n");
+					+ " by City or State\n7.View Person by State or City\n8.Sort Person\n"
+					+ "9.Write into File\nAny other choice: Exit\n");
 			int choice = scanner.nextInt();
 				switch(choice) {
 				case 1:
@@ -53,12 +57,36 @@ public class AddressBookMain {
 				case 8:
 					sortedDisplay();
 					break;
+				case 9:
+					write(filePath);
+					break;
 				default:
 					return;
 			}
 		}
 	}
 
+	
+	 /**
+	  * method used to write the person details to file
+	 * @param fileName
+	 */
+	private static void write(String fileName) {
+			File file = new File(fileName);
+			try {
+				file.createNewFile();
+				FileWriter fileWriter= new FileWriter(file);
+				for(Contact contact: addressBook.contactInfo) {
+					fileWriter.write(contact.toString()+"\n");
+				}
+				fileWriter.flush();
+				fileWriter.close();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	 
 	/**
 	 * method in which contacts sorted according to Name, City, State or Zip
 	 */
