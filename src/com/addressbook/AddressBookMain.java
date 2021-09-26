@@ -50,13 +50,52 @@ public class AddressBookMain {
 				case 7:
 					view();
 					break;
+				case 8:
+					sortedDisplay();
+					break;
 				default:
 					return;
 			}
 		}
 	}
 
-	
+	/**
+	 * method in which contacts sorted according to Name, City, State or Zip
+	 */
+	private static void sortedDisplay() {
+		List<Contact> contactDetails = addressBook.getAddress();
+		if(contactDetails.size() == 0) {
+			System.out.println("Address book is empty");
+			return;
+		}
+		System.out.println("Sort by\n1. Name\n2. City\n3. State\n4. Zip\n");
+		int choice = scanner.nextInt();
+		scanner.nextLine();
+		switch(choice) {
+			case 1:
+				Collections.sort(contactDetails);
+				break;
+			case 2:
+				Collections.sort(contactDetails, new City());
+				break;
+			case 3:
+				Collections.sort(contactDetails, new State());
+				break;
+			case 4:
+				Collections.sort(contactDetails, new Zip());
+				break;
+			default:
+				System.out.println("Invalid choice");
+				return;
+		}
+		
+		contactDetails.stream().forEach((contact)->{
+			System.out.println(contact);
+		});
+		
+	}
+
+
 
 	/**
 	 * method to view person by city or state
@@ -221,7 +260,7 @@ public class AddressBookMain {
 	 * method which is created to delete the contacts
 	 */
 	private static void deleteContacts() {
-		Set<Contact> contactDetails = addressBook.getAddress();
+		List<Contact> contactDetails = addressBook.getAddress();
 		boolean flag = false;
 		Contact delete = null;
 		
@@ -252,7 +291,7 @@ public class AddressBookMain {
 	 * method which is created to edit contacts
 	 */
 	private static void editContacts() {
-		Set<Contact> contactDetails = addressBook.getAddress();
+		List<Contact> contactDetails = addressBook.getAddress();
 		boolean flag = false;
 		Contact edit = null;
 		
@@ -359,8 +398,7 @@ public class AddressBookMain {
 	 * method which is created to dispaly the contacts
 	 */
 	private static void displayContacts() {
-		Set<Contact> contactDetails = addressBook.getAddress();
-		Collections.sort((List<Contact>) contactDetails);
+		List<Contact> contactDetails = addressBook.getAddress();
 		if(contactDetails.size() == 0) {
 			System.out.println("Address book is empty");
 		}else {
