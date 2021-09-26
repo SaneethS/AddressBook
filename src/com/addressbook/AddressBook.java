@@ -8,14 +8,14 @@ import java.util.*;
  */
 public class AddressBook {
 	
-	 private Set<Contact> contactInfo = new HashSet<Contact>(); 
+	 private List<Contact> contactInfo = new ArrayList<Contact>(); 
 	 
 	 
 	 public void addContactDetails(Contact c) {
 		 contactInfo.add(c);
 	 }
 	 
-	 public Set<Contact> getAddress(){
+	 public List<Contact> getAddress(){
 		 return contactInfo;
 	 }
 }
