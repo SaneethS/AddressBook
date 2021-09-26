@@ -1,5 +1,8 @@
 package com.addressbook;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 /**@class which is created where collection class is used
@@ -8,7 +11,7 @@ import java.util.*;
  */
 public class AddressBook {
 	
-	 private List<Contact> contactInfo = new ArrayList<Contact>(); 
+	 static List<Contact> contactInfo = new ArrayList<Contact>(); 
 	 
 	 
 	 public void addContactDetails(Contact c) {
@@ -18,4 +21,6 @@ public class AddressBook {
 	 public List<Contact> getAddress(){
 		 return contactInfo;
 	 }
+	 
+	
 }
