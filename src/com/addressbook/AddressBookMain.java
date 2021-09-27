@@ -1,11 +1,17 @@
 package com.addressbook;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvException;
 
 
 /**@class which is created to call all the funtions from Contact and AddressBook
@@ -19,6 +25,7 @@ public class AddressBookMain {
 	private static Map<String, List<Contact>> stateMap = new HashMap<String, List<Contact>>();
     private static Map<String, List<Contact>> cityMap = new HashMap<String, List<Contact>>();
     private static String filePath = "data/result.txt";
+    private static String filePathCsv = "data/resultcsv.csv";
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to Address Book program");
@@ -30,7 +37,7 @@ public class AddressBookMain {
 			System.out.println("\nEnter your choice\n1.Add Contacts\n2.Display Contact\n3.Edit Contacts\n"
 					+ "4.Delete Contacts\n5.Choose Address Book\n6.Search"
 					+ " by City or State\n7.View Person by State or City\n8.Sort Person\n"
-					+ "9.Write into File\nAny other choice: Exit\n");
+					+ "9.Write into File\n10.Write to csv\nAny other choice: Exit\n");
 			int choice = scanner.nextInt();
 				switch(choice) {
 				case 1:
@@ -60,6 +67,11 @@ public class AddressBookMain {
 				case 9:
 					write(filePath);
 					break;
+				case 10:
+					writeTOCsv(filePathCsv);
+					break;
+				case 11:
+					readFromCsv(filePathCsv);
 				default:
 					return;
 			}
@@ -67,7 +79,63 @@ public class AddressBookMain {
 	}
 
 	
-	 /**
+	/**
+	 * method used to read from csv file
+	 * @param filePath
+	 */
+	private static void readFromCsv(String filePath) {
+		File file = new File(filePath);
+		try {
+			FileReader fileReader =  new FileReader(file);
+			CSVReader reader = new CSVReader(fileReader);
+			List<String[]> data = reader.readAll();
+			for(String[] arr: data) {
+				for(String s: arr) {
+					System.out.print(s+" ");
+				}
+				System.out.println();
+			}
+			reader.close();
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (CsvException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	/**
+	 * method which is used to write contact to csv file
+	 * @param filePathCsv2
+	 */
+	private static void writeTOCsv(String filePathCsv2)  {
+		File file = new File(filePathCsv2);
+		FileWriter fileWriter;
+		try {
+			fileWriter = new FileWriter(file);
+			CSVWriter writer = new CSVWriter(fileWriter);
+			file.createNewFile();
+			String[] header = {"firstName", "lastName", "address", "city", "state", "zip", "email", "phone"};
+			writer.writeNext(header);
+			
+			for(Contact contact: addressBook.contactInfo) {
+				String[] contactInfo =  {contact.getFirstName(),contact.getLastName(),contact.getAddress(),contact.getCity(),contact.getState(),Integer.toString(contact.getZip()),contact.getEmail(),contact.getMobileNo().toString()};
+				writer.writeNext(contactInfo);
+			}
+			
+			writer.flush();
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+
+	/**
 	  * method used to write the person details to file
 	 * @param fileName
 	 */
