@@ -1,0 +1,2 @@
+Contact [firstName=Saneeth, lastName=S, address=Abc, city=Moodbidre, state=Karnataksa, zip=677656, mobileNo=8975654342, email=saneeth@gmail.com]
+Contact [firstName=John, lastName=Wick, address=asdf, city=daf, state=us, zip=22536, mobileNo=5778869696, email=john@gmail.com]
