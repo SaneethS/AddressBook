@@ -9,6 +9,8 @@ import java.math.BigInteger;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
@@ -26,6 +28,7 @@ public class AddressBookMain {
     private static Map<String, List<Contact>> cityMap = new HashMap<String, List<Contact>>();
     private static String filePath = "data/result.txt";
     private static String filePathCsv = "data/resultcsv.csv";
+    private static String filePathJson = "data/resultjson.json";
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to Address Book program");
@@ -37,7 +40,8 @@ public class AddressBookMain {
 			System.out.println("\nEnter your choice\n1.Add Contacts\n2.Display Contact\n3.Edit Contacts\n"
 					+ "4.Delete Contacts\n5.Choose Address Book\n6.Search"
 					+ " by City or State\n7.View Person by State or City\n8.Sort Person\n"
-					+ "9.Write into File\n10.Write to csv\nAny other choice: Exit\n");
+					+ "9.Write into File\n10.Write to csv\n11.Read from csv\n12.Write to Json\n13.Read from Json"
+					+ "\nAny other choice: Exit\n");
 			int choice = scanner.nextInt();
 				switch(choice) {
 				case 1:
@@ -72,6 +76,13 @@ public class AddressBookMain {
 					break;
 				case 11:
 					readFromCsv(filePathCsv);
+					break;
+				case 12:
+					writeTOJSON(filePathJson);
+					break;
+				case 13:
+					readFromJSON(filePathJson);
+					break;
 				default:
 					return;
 			}
@@ -79,6 +90,47 @@ public class AddressBookMain {
 	}
 
 	
+	/**
+	 * method used to read contacts from json file
+	 * @param filePath
+	 */
+	private static void readFromJSON(String filePath) {
+		File file = new File(filePath);
+		Gson gson = new Gson();
+		try {
+			FileReader fileReader = new FileReader(file);
+			JsonReader jsonReader = new JsonReader(fileReader);
+			List<String[]> contacts = gson.fromJson(jsonReader, List.class);
+			System.out.println(contacts);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	/**
+	 * method used to write contacts to json file
+	 * @param filePath
+	 */
+	private static void writeTOJSON(String filePath) {
+		File file = new File(filePath);
+		try {
+			FileWriter fileWriter = new FileWriter(file);
+			Gson gson = new Gson();
+			file.createNewFile();
+			String json = gson.toJson(addressBook.contactInfo);
+			fileWriter.write(json);
+			
+			fileWriter.flush();
+			fileWriter.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+
 	/**
 	 * method used to read from csv file
 	 * @param filePath
